@@ -28,5 +28,14 @@ $factory->define(App\Team::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
         'logo' => $faker->name,
+        'year' => $faker->year
+    ];
+});
+
+$factory->define(App\Player::class, function (Faker\Generator $faker) {
+
+    return [
+        'name' => $faker->name,
+        'photo' => $faker->name
     ];
 });

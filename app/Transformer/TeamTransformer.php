@@ -8,7 +8,8 @@ class TeamTransformer {
         return [
             'id' => $team->id,
             'team' => $team->name,
-            'team_logo' => $team->logo
+            'team_logo' => $team->logo,
+            'year' => $team->year
         ];
     }
 }
