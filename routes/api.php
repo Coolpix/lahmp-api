@@ -19,3 +19,4 @@ Route::get('/user', function (Request $request) {
 
 Route::get('/teams', 'TeamController@index');
 Route::get('/players', 'PlayerController@index');
+Route::get('/matches', 'MatchController@index');

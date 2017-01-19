@@ -39,3 +39,11 @@ $factory->define(App\Player::class, function (Faker\Generator $faker) {
         'photo' => $faker->name
     ];
 });
+
+$factory->define(App\Match::class, function (Faker\Generator $faker) {
+
+    return [
+        'team_local' => $faker->name,
+        'team_away' => $faker->name
+    ];
+});
