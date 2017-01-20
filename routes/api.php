@@ -17,6 +17,35 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
 
-Route::get('/teams', 'TeamController@index');
-Route::get('/players', 'PlayerController@index');
-Route::get('/matches', 'MatchController@index');
+Route::group(['prefix' => 'players'], function () {
+    Route::get('/', 'PlayerController@index');
+    Route::get('/{id}', 'PlayerController@getByID');
+    Route::get('/{id}/teams', 'PlayerController@getTeams');
+});
+
+Route::group(['prefix' => 'matches'], function () {
+    Route::get('/', 'MatchController@index');
+    Route::get('/{id}', 'MatchController@getByID');
+    Route::get('/{id}/teams', 'MatchController@getTeams');
+});
+
+Route::group(['prefix' => 'teams'], function () {
+    Route::get('/', 'TeamController@index');
+    Route::get('/{id}', 'TeamController@getByID');
+    Route::get('/year/{year}', 'TeamController@getByYear');
+    Route::get('/{id}/players', 'TeamController@getPlayers');
+});
+
+Route::group(['prefix' => 'rounds'], function () {
+    Route::get('/', 'RoundController@index');
+    Route::get('/{id}', 'RoundController@getByID');
+    /*Route::get('/year/{year}', 'TeamController@getByYear');
+    Route::get('/{id}/players', 'TeamController@getPlayers');*/
+});
+
+Route::group(['prefix' => 'seasons'], function () {
+    Route::get('/', 'SeasonController@index');
+    /*Route::get('/{id}', 'TeamController@getByID');
+    Route::get('/year/{year}', 'TeamController@getByYear');
+    Route::get('/{id}/players', 'TeamController@getPlayers');*/
+});

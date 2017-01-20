@@ -11,7 +11,7 @@ class Player extends Model
     ];
 
     /**
-     * The teams that belong to the user.
+     * The teams that belong to the player.
      */
     public function teams()
     {

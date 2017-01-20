@@ -10,4 +10,11 @@ class Team extends Model
         'name', 'logo', 'year'
     ];
 
+    /**
+     * The players that belong to the team.
+     */
+    public function players()
+    {
+        return $this->belongsToMany('App\Player');
+    }
 }

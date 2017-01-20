@@ -9,7 +9,8 @@ class TeamTransformer {
             'id' => $team->id,
             'team' => $team->name,
             'team_logo' => $team->logo,
-            'year' => $team->year
+            'year' => $team->year,
+            'players' => $team->players
         ];
     }
 }
