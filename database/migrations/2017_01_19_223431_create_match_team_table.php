@@ -15,8 +15,10 @@ class CreateMatchTeamTable extends Migration
     {
         Schema::create('match_team', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('match_id');
-            $table->integer('team_id');
+            $table->integer('match_id')->unsigned();
+            $table->integer('team_id')->unsigned();
+            $table->foreign('match_id')->references('id')->on('matches')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('team_id')->references('id')->on('teams')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

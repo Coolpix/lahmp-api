@@ -28,7 +28,7 @@ $factory->define(App\Team::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
         'logo' => $faker->name,
-        'year' => $faker->year
+        'season' => $faker->year
     ];
 });
 
@@ -51,5 +51,13 @@ $factory->define(App\Round::class, function (Faker\Generator $faker) {
 
     return [
         'name' => $faker->name
+    ];
+});
+
+$factory->define(App\Season::class, function (Faker\Generator $faker) {
+
+    return [
+        'name' => $faker->name,
+        'year' => $faker->year
     ];
 });

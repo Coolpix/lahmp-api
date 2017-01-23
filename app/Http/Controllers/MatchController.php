@@ -36,4 +36,9 @@ class MatchController extends Controller
         $teams = Match::find($id)->teams;
         return $this->response->withItem($teams, new MatchTeamTransformer());
     }
+
+    public function getBySeason($season){
+        $matches = Match::where('round_id',"=",$season)->get();
+        return $this->response->withItem($matches, new MatchTransformer());
+    }
 }

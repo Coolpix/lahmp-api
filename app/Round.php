@@ -17,4 +17,12 @@ class Round extends Model
     {
         return $this->hasMany('App\Match');
     }
+
+    /**
+     * The season that belong to the round.
+     */
+    public function season()
+    {
+        return $this->belongsTo('App\Season');
+    }
 }

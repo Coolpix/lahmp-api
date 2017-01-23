@@ -32,8 +32,8 @@ class TeamController extends Controller
         }
     }
 
-    public function getByYear($year){
-        $teams = Team::where('year',"=",$year)->get();
+    public function getBySeason($season){
+        $teams = Team::where('season',"=",$season)->get();
         return $this->response->withCollection($teams, new TeamTransformer());
     }
 

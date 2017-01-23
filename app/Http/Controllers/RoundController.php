@@ -23,7 +23,7 @@ class RoundController extends Controller
     }
 
     public function getByID($id){
-        $round = Team::find($id);
+        $round = Round::find($id);
         if(!$round){
             return $this->response->errorNotFound('Round Not Found');
         }else{

@@ -13,7 +13,6 @@ class MatchesTableSeeder extends Seeder
     {
         factory(App\Match::class, 50)->create()->each(function ($u) {
             $u->teams()->save(factory(App\Team::class)->make());
-            $u->teams()->save(factory(App\Team::class)->make());
             $u->round()->associate(factory(App\Round::class)->make()->save())->save();
         });
 

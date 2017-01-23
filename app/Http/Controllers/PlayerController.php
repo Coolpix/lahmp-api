@@ -25,7 +25,7 @@ class PlayerController extends Controller
 
     public function getByID($id){
         $player = Player::find($id);
-        if(!$team){
+        if(!$player){
             return $this->response->errorNotFound('Match Not Found');
         }else{
             return $this->response->withItem($player, new PlayerTransformer());

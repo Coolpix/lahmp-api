@@ -17,7 +17,7 @@ class CreateTeamsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('logo');
-            $table->integer('year');
+            $table->integer('season');
             $table->timestamps();
         });
     }

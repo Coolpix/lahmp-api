@@ -27,12 +27,13 @@ Route::group(['prefix' => 'matches'], function () {
     Route::get('/', 'MatchController@index');
     Route::get('/{id}', 'MatchController@getByID');
     Route::get('/{id}/teams', 'MatchController@getTeams');
+    Route::get('/season/{season}', 'MatchController@getBySeason');
 });
 
 Route::group(['prefix' => 'teams'], function () {
     Route::get('/', 'TeamController@index');
     Route::get('/{id}', 'TeamController@getByID');
-    Route::get('/year/{year}', 'TeamController@getByYear');
+    Route::get('/season/{season}', 'TeamController@getBySeason');
     Route::get('/{id}/players', 'TeamController@getPlayers');
 });
 

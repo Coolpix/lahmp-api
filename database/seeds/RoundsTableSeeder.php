@@ -11,16 +11,8 @@ class RoundsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Round::class, 50)->create()->each(function ($u) {
-            $u->matches()->save(factory(App\Match::class)->make());
-            $u->matches()->save(factory(App\Match::class)->make());
-            $u->matches()->save(factory(App\Match::class)->make());
-            $u->matches()->save(factory(App\Match::class)->make());
-            $u->matches()->save(factory(App\Match::class)->make());
-            $u->matches()->save(factory(App\Match::class)->make());
-            $u->matches()->save(factory(App\Match::class)->make());
-            $u->matches()->save(factory(App\Match::class)->make());
-            $u->matches()->save(factory(App\Match::class)->make());
+        factory(App\Round::class, 100)->create()->each(function ($u) {
+            $u->season()->associate(factory(App\Season::class)->make()->save())->save();
             $u->matches()->save(factory(App\Match::class)->make());
         });
     }
