@@ -14,6 +14,7 @@ class CreateMatchesTable extends Migration
     public function up()
     {
         Schema::create('matches', function (Blueprint $table) {
+            $table->softDeletes();
             $table->increments('id');
             $table->integer('round_id')->unsigned()->nullable();
             $table->foreign('round_id')->references('id')->on('rounds')->onDelete('cascade')->onUpdate('cascade');

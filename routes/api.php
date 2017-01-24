@@ -21,13 +21,19 @@ Route::group(['prefix' => 'players'], function () {
     Route::get('/', 'PlayerController@index');
     Route::get('/{id}', 'PlayerController@getByID');
     Route::get('/{id}/teams', 'PlayerController@getTeams');
+    Route::post('/', 'PlayerController@savePlayer');
+    Route::delete('/{id}', 'PlayerController@deletePlayer');
 });
 
 Route::group(['prefix' => 'matches'], function () {
     Route::get('/', 'MatchController@index');
     Route::get('/{id}', 'MatchController@getByID');
     Route::get('/{id}/teams', 'MatchController@getTeams');
+    Route::get('/{id}/round', 'MatchController@getRound');
     Route::get('/season/{season}', 'MatchController@getBySeason');
+    Route::post('/', 'MatchController@saveMatch');
+    Route::put('/{id}', 'MatchController@updateMatch');
+    Route::delete('/{id}', 'MatchController@deleteMatch');
 });
 
 Route::group(['prefix' => 'teams'], function () {

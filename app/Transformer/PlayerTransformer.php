@@ -8,6 +8,7 @@ class PlayerTransformer {
         return [
             'id' => $player->id,
             'photo' => $player->photo,
+            'name' => $player->name,
             'teams' => $player->teams
         ];
     }
