@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Match;
 use App\Transformer\RoundTransformer;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use EllipseSynergie\ApiResponse\Contracts\Response;
 use App\Round;
+use Illuminate\Support\Facades\DB;
 
 class RoundController extends Controller
 {
@@ -28,6 +31,39 @@ class RoundController extends Controller
             return $this->response->errorNotFound('Round Not Found');
         }else{
             return $this->response->withItem($round, new RoundTransformer());
+        }
+    }
+
+    public function getBySeason($season){
+        $rounds = Round::whereHas('season',function($query) use ($season){
+            $query -> where('year',"=",$season);
+        })->get();
+        return $this->response->withCollection($rounds, new RoundTransformer());
+    }
+
+    public function saveRound(Request $request){
+        $round = new Round;
+        $round->name = $request->name;
+        $round->save();
+        $round->season()->associate($request->season)->save();
+        foreach ($request->matches as $match){
+            try {
+                $matchToSave = Match::findOrFail($match);
+                $round->matches()->save($matchToSave);
+            }catch (ModelNotFoundException $ex){
+                return $this->response->errorNotFound('Team '. $match .' Not Found');
+            }
+        }
+        return $this->response->withItem($round, new RoundTransformer());
+    }
+
+    public function deleteRound($roundID){
+        $round = Round::find($roundID);
+        if ($round){
+            $round->delete();
+            return $this->response->withItem($round, new RoundTransformer());
+        }else{
+            return $this->response->errorNotFound('Round Not Found');
         }
     }
 

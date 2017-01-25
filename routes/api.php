@@ -41,18 +41,22 @@ Route::group(['prefix' => 'teams'], function () {
     Route::get('/{id}', 'TeamController@getByID');
     Route::get('/season/{season}', 'TeamController@getBySeason');
     Route::get('/{id}/players', 'TeamController@getPlayers');
+    Route::post('/', 'TeamController@saveTeam');
+    Route::delete('/{id}', 'TeamController@deleteTeam');
 });
 
 Route::group(['prefix' => 'rounds'], function () {
     Route::get('/', 'RoundController@index');
     Route::get('/{id}', 'RoundController@getByID');
-    /*Route::get('/year/{year}', 'TeamController@getByYear');
-    Route::get('/{id}/players', 'TeamController@getPlayers');*/
+    Route::get('/season/{season}', 'RoundController@getBySeason');
+    Route::post('/', 'RoundController@saveRound');
+    Route::delete('/{id}', 'RoundController@deleteRound');
 });
 
 Route::group(['prefix' => 'seasons'], function () {
     Route::get('/', 'SeasonController@index');
-    /*Route::get('/{id}', 'TeamController@getByID');
-    Route::get('/year/{year}', 'TeamController@getByYear');
-    Route::get('/{id}/players', 'TeamController@getPlayers');*/
+    Route::get('/{id}', 'SeasonController@getByID');
+    Route::get('/{id}/rounds', 'SeasonController@getRounds');
+    Route::post('/', 'SeasonController@saveSeason');
+    Route::delete('/{id}', 'SeasonController@deleteSeason');
 });

@@ -41,4 +41,24 @@ class TeamController extends Controller
         $team = Team::find($id)->players;
         return $this->response->withItem($team, new PlayerTeamTransformer());
     }
+
+    public function saveTeam(Request $request){
+        $team = new Team;
+        $team->name = $request->name;
+        $team->logo = $request->logo;
+        $team->season = $request->season;
+        $team->save();
+        $team->players()->attach($request->players);
+        return $this->response->withItem($team, new TeamTransformer());
+    }
+
+    public function deleteTeam($teamID){
+        $team = Team::find($teamID);
+        if ($team){
+            $team->delete();
+            return $this->response->withItem($team, new TeamTransformer());
+        }else{
+            return $this->response->errorNotFound('Team Not Found');
+        }
+    }
 }
