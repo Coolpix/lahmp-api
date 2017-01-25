@@ -17,4 +17,12 @@ class Season extends Model
     {
         return $this->hasMany('App\Round');
     }
+
+    /**
+     * The teams that belong to the season.
+     */
+    public function teams()
+    {
+        return $this->hasMany('App\Team')->orderBy('points','desc');
+    }
 }

@@ -57,6 +57,7 @@ Route::group(['prefix' => 'seasons'], function () {
     Route::get('/', 'SeasonController@index');
     Route::get('/{id}', 'SeasonController@getByID');
     Route::get('/{id}/rounds', 'SeasonController@getRounds');
+    Route::get('/{id}/teams', 'SeasonController@getTeams');
     Route::post('/', 'SeasonController@saveSeason');
     Route::delete('/{id}', 'SeasonController@deleteSeason');
 });

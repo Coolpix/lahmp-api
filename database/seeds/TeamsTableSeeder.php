@@ -12,6 +12,7 @@ class TeamsTableSeeder extends Seeder
     public function run()
     {
         factory(App\Team::class, 1)->create()->each(function ($u) {
+            $u->season()->associate(factory(App\Season::class)->make()->save())->save();
             $u->players()->save(factory(App\Player::class)->make());
         });
     }

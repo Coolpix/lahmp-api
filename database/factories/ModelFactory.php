@@ -28,7 +28,7 @@ $factory->define(App\Team::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
         'logo' => $faker->name,
-        'season' => $faker->year
+        'points' => $faker->numberBetween(0,30)
     ];
 });
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Round;
 use App\Transformer\RoundTransformer;
 use App\Transformer\SeasonRoundsTransformer;
+use App\Transformer\SeasonTeamsTransformer;
 use App\Transformer\SeasonTransformer;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -44,8 +45,16 @@ class SeasonController extends Controller
         }
     }
 
+    public function getTeams($id){
+        $teams = Season::find($id)->teams;
+        if(!$teams){
+            return $this->response->errorNotFound('Season Not Found');
+        }else{
+            return $this->response->withItem($teams, new SeasonTeamsTransformer());
+        }
+    }
+
     public function saveSeason(Request $request){
-        //TODO: Acabar la creacion de un Season
         $season = new Season;
         $season->name = $request->name;
         $season->year = $request->year;

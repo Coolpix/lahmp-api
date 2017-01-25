@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Team extends Model
 {
     protected $fillable = [
-        'name', 'logo', 'season'
+        'name', 'logo', 'points'
     ];
 
     /**
@@ -16,5 +16,13 @@ class Team extends Model
     public function players()
     {
         return $this->belongsToMany('App\Player');
+    }
+
+    /**
+     * The season that belong to the team.
+     */
+    public function season()
+    {
+        return $this->belongsTo('App\Season');
     }
 }
