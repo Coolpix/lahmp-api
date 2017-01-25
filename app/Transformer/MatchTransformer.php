@@ -8,7 +8,8 @@ class MatchTransformer {
         return [
             'id' => $match->id,
             'teams' => $match->teams,
-            'round' => $match->round
+            'round' => $match->round,
+            'goals' => $match->goals
         ];
     }
 }

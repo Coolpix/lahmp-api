@@ -25,4 +25,12 @@ class Match extends Model
     {
         return $this->belongsTo('App\Round');
     }
+
+    /**
+     * The goals that belong to the match.
+     */
+    public function goals()
+    {
+        return $this->hasMany('App\Goal');
+    }
 }

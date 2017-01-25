@@ -11,7 +11,8 @@ class TeamTransformer {
             'team_logo' => $team->logo,
             'points' => $team->points,
             'season' => $team->season,
-            'players' => $team->players
+            'players' => $team->players,
+            'goals' => $team->goals
         ];
     }
 }

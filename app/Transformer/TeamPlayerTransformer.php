@@ -2,7 +2,7 @@
 
 namespace App\Transformer;
 
-class PlayerTeamTransformer {
+class TeamPlayerTransformer {
 
     public function transform($teams){
         return [$teams];

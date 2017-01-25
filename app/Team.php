@@ -25,4 +25,12 @@ class Team extends Model
     {
         return $this->belongsTo('App\Season');
     }
+
+    /**
+     * The goals that belong to the team.
+     */
+    public function goals()
+    {
+        return $this->hasMany('App\Goal');
+    }
 }

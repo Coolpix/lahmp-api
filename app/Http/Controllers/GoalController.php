@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Transformer\GoalMatchTransformer;
+use App\Transformer\GoalTransformer;
 use App\Transformer\MatchRoundTransformer;
 use App\Transformer\MatchTransformer;
 use App\Transformer\MatchTeamTransformer;
@@ -9,11 +11,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use EllipseSynergie\ApiResponse\Contracts\Response;
-use App\Match;
-use App\Round;
-use App\Team;
+use App\Goal;
 
-class MatchController extends Controller
+class GoalController extends Controller
 {
     protected $response;
     use SoftDeletes;
@@ -23,40 +23,40 @@ class MatchController extends Controller
     }
 
     public function index(){
-        $matches = Match::paginate(15);
-        return $this->response->withPaginator($matches, new MatchTransformer());
+        $goals = Goal::paginate(15);
+        return $this->response->withPaginator($goals, new GoalTransformer());
     }
 
     public function getByID($id){
-        $match = Match::find($id);
-        if(!$match){
-            return $this->response->errorNotFound('Match Not Found');
+        $goal = Goal::find($id);
+        if(!$goal){
+            return $this->response->errorNotFound('Goal Not Found');
         }else{
-            return $this->response->withItem($match, new MatchTransformer());
+            return $this->response->withItem($goal, new GoalTransformer());
         }
     }
 
-    public function getTeams($id){
-        $teams = Match::find($id)->teams;
-        return $this->response->withItem($teams, new MatchTeamTransformer());
+    public function getTeam($id){
+        $team = Goal::find($id)->team;
+        return $this->response->withItem($team, new GoalTransformer());
     }
 
-    public function getRound($id){
-        $round = Match::find($id)->round;
-        return $this->response->withItem($round, new MatchRoundTransformer());
+    public function getPlayer($id){
+        $player = Goal::find($id)->player;
+        return $this->response->withItem($player, new GoalTransformer());
     }
 
-    public function getGoals($id){
-        $goals = Match::find($id)->goals;
-        return $this->response->withItem($goals, new MatchTeamTransformer());
+    public function getMatch($id){
+        $match = Goal::find($id)->match;
+        return $this->response->withItem($match, new GoalMatchTransformer());
     }
 
-    public function getBySeason($season){
+    /*public function getMatch($id){
         $matches = Match::whereHas('teams',function($query) use ($season){
             $query -> where('season',"=",$season);
         })->get();
         return $this->response->withCollection($matches, new MatchTransformer());
-    }
+    }*/
 
     public function saveMatch(Request $request){
         $match = new Match;

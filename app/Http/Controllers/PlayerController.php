@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Goal;
 use App\Transformer\PlayerTransformer;
 use App\Transformer\PlayerTeamTransformer;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use EllipseSynergie\ApiResponse\Contracts\Response;
@@ -37,11 +39,23 @@ class PlayerController extends Controller
         return $this->response->withItem($teams, new PlayerTeamTransformer());
     }
 
+    public function getGoals($id){
+        $goals = Player::find($id)->goals;
+        return $this->response->withItem($goals, new PlayerTeamTransformer());
+    }
+
     public function savePlayer(Request $request){
         $player = new Player;
         $player->photo = $request->photo;
         $player->name = $request->name;
         $player->save();
+        $player->teams()->attach($request->team);
+        try {
+            $goalToSave = Goal::findOrFail($request->goal);
+            $player->goals()->save($goalToSave);
+        }catch (ModelNotFoundException $ex){
+            return $this->response->errorNotFound('Goal '. $request->goal .' Not Found');
+        }
         return $this->response->withItem($player, new PlayerTransformer());
     }
 

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Transformer\TeamPlayerTransformer;
+use App\Transformer\TeamTransformer;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use EllipseSynergie\ApiResponse\Contracts\Response;
 use App\Team;
-use App\Transformer\TeamTransformer;
-use App\Transformer\PlayerTeamTransformer;
 
 class TeamController extends Controller
 {
@@ -39,7 +39,12 @@ class TeamController extends Controller
 
     public function getPlayers($id){
         $team = Team::find($id)->players;
-        return $this->response->withItem($team, new PlayerTeamTransformer());
+        return $this->response->withItem($team, new TeamPlayerTransformer());
+    }
+
+    public function getGoals($id){
+        $goals = Team::find($id)->goals;
+        return $this->response->withItem($goals, new TeamPlayerTransformer());
     }
 
     public function saveTeam(Request $request){
