@@ -17,7 +17,8 @@ class CreateTeamsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('logo');
-            $table->integer('season');
+            $table->integer('season_id')->unsigned()->nullable();
+            $table->foreign('season_id')->references('id')->on('seasons')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

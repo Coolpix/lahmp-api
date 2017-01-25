@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Round;
 use App\Transformer\RoundTransformer;
 use App\Transformer\SeasonRoundsTransformer;
 use App\Transformer\SeasonTransformer;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use EllipseSynergie\ApiResponse\Contracts\Response;
@@ -48,6 +50,15 @@ class SeasonController extends Controller
         $season->name = $request->name;
         $season->year = $request->year;
         $season->save();
+        foreach ($request->rounds as $round){
+            try {
+                $roundToSave = Round::findOrFail($round);
+                $season->rounds()->save($roundToSave);
+            }catch (ModelNotFoundException $ex){
+                return $this->response->errorNotFound('Round '. $round .' Not Found');
+            }
+        }
+        return $this->response->withItem($season, new SeasonTransformer());
     }
 
     public function deleteSeason($seasonID){
