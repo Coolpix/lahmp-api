@@ -33,4 +33,12 @@ class Team extends Model
     {
         return $this->hasMany('App\Goal');
     }
+
+    /**
+     * The assits that belong to the team.
+     */
+    public function assists()
+    {
+        return $this->hasMany('App\Assist');
+    }
 }

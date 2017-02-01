@@ -68,3 +68,10 @@ $factory->define(App\Goal::class, function (Faker\Generator $faker) {
 
     ];
 });
+
+$factory->define(App\Assist::class, function (Faker\Generator $faker) {
+
+    return [
+
+    ];
+});

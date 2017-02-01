@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Goal extends Model
 {
     protected $fillable = [
-        'name', 'photo'
+
     ];
 
     /**
@@ -32,5 +32,13 @@ class Goal extends Model
     public function team()
     {
         return $this->belongsTo('App\Team');
+    }
+
+    /**
+     * The assist that belong to the goal.
+     */
+    public function assist()
+    {
+        return $this->belongsTo('App\Assist');
     }
 }

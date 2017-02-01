@@ -25,4 +25,12 @@ class Player extends Model
     {
         return $this->hasMany('App\Goal');
     }
+
+    /**
+     * The assists that belong to the player.
+     */
+    public function assists()
+    {
+        return $this->hasMany('App\Assist');
+    }
 }
