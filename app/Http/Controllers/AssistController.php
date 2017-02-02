@@ -2,18 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Transformer\GoalMatchTransformer;
-use App\Transformer\GoalTransformer;
-use App\Transformer\MatchRoundTransformer;
-use App\Transformer\MatchTransformer;
-use App\Transformer\MatchTeamTransformer;
+use App\Assist;
+use App\Transformer\AssistTransformer;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use EllipseSynergie\ApiResponse\Contracts\Response;
 use App\Goal;
 
-class GoalController extends Controller
+class AssistController extends Controller
 {
     protected $response;
     use SoftDeletes;
@@ -23,20 +20,20 @@ class GoalController extends Controller
     }
 
     public function index(){
-        $goals = Goal::paginate(15);
-        return $this->response->withPaginator($goals, new GoalTransformer());
+        $assists = Assist::paginate(15);
+        return $this->response->withPaginator($assists, new AssistTransformer());
     }
 
     public function getByID($id){
-        $goal = Goal::find($id);
-        if(!$goal){
-            return $this->response->errorNotFound('Goal Not Found');
+        $assist = Assist::find($id);
+        if(!$assist){
+            return $this->response->errorNotFound('Assist Not Found');
         }else{
-            return $this->response->withItem($goal, new GoalTransformer());
+            return $this->response->withItem($assist, new AssistTransformer());
         }
     }
 
-    public function getTeam($id){
+    /*public function getTeam($id){
         $team = Goal::find($id)->team;
         return $this->response->withItem($team, new GoalTransformer());
     }
@@ -50,6 +47,13 @@ class GoalController extends Controller
         $match = Goal::find($id)->match;
         return $this->response->withItem($match, new GoalMatchTransformer());
     }
+
+    public function getMatch($id){
+        $matches = Match::whereHas('teams',function($query) use ($season){
+            $query -> where('season',"=",$season);
+        })->get();
+        return $this->response->withCollection($matches, new MatchTransformer());
+    }*/
 
     public function saveMatch(Request $request){
         $match = new Match;

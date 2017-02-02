@@ -10,7 +10,8 @@ class PlayerTransformer {
             'photo' => $player->photo,
             'name' => $player->name,
             'teams' => $player->teams,
-            'goals' => $player->goals
+            'goals' => $player->goals,
+            'assists' => $player->assists
         ];
     }
 }

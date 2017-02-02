@@ -9,7 +9,8 @@ class GoalTransformer {
             'id' => $goal->id,
             'team' => $goal->team,
             'player' => $goal->player,
-            'match' => $goal->match
+            'match' => $goal->match,
+            'assist' => $goal->assist
         ];
     }
 }

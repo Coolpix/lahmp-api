@@ -33,4 +33,12 @@ class Match extends Model
     {
         return $this->hasMany('App\Goal');
     }
+
+    /**
+     * The assists that belong to the match.
+     */
+    public function assists()
+    {
+        return $this->hasMany('App\Assist');
+    }
 }
