@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Transformer\MatchRoundTransformer;
-use App\Transformer\MatchTransformer;
-use App\Transformer\MatchTeamTransformer;
+use App\Transformer\Matches\MatchRoundTransformer;
+use App\Transformer\Matches\MatchTransformer;
+use App\Transformer\Matches\MatchTeamTransformer;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use EllipseSynergie\ApiResponse\Contracts\Response;
 use App\Match;
-use App\Round;
-use App\Team;
 
 class MatchController extends Controller
 {

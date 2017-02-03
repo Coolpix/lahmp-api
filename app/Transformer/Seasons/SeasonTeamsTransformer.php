@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Transformer;
+namespace App\Transformer\Seasons;
 
-class MatchTeamTransformer {
+class SeasonTeamsTransformer {
 
     public function transform($teams){
         return [$teams];

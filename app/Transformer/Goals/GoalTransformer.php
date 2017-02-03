@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Transformer;
+namespace App\Transformer\Goals;
 
 class GoalTransformer {
 

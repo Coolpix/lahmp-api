@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Goal;
-use App\Transformer\PlayerTransformer;
-use App\Transformer\PlayerTeamTransformer;
+use App\Transformer\Players\PlayerTransformer;
+use App\Transformer\Players\PlayerTeamTransformer;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Http\Requests;

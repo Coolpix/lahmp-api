@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Transformer\GoalMatchTransformer;
-use App\Transformer\GoalTransformer;
-use App\Transformer\MatchRoundTransformer;
-use App\Transformer\MatchTransformer;
-use App\Transformer\MatchTeamTransformer;
+use App\Transformer\Goals\GoalMatchTransformer;
+use App\Transformer\Goals\GoalPlayerTransformer;
+use App\Transformer\Goals\GoalTeamTransformer;
+use App\Transformer\Goals\GoalTransformer;
+use App\Transformer\Matches\MatchTransformer;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -38,12 +38,12 @@ class GoalController extends Controller
 
     public function getTeam($id){
         $team = Goal::find($id)->team;
-        return $this->response->withItem($team, new GoalTransformer());
+        return $this->response->withItem($team, new GoalTeamTransformer());
     }
 
     public function getPlayer($id){
         $player = Goal::find($id)->player;
-        return $this->response->withItem($player, new GoalTransformer());
+        return $this->response->withItem($player, new GoalPlayerTransformer());
     }
 
     public function getMatch($id){

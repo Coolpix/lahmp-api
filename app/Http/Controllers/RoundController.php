@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Match;
-use App\Transformer\RoundTransformer;
+use App\Transformer\Rounds\RoundTransformer;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use EllipseSynergie\ApiResponse\Contracts\Response;
 use App\Round;
-use Illuminate\Support\Facades\DB;
 
 class RoundController extends Controller
 {
