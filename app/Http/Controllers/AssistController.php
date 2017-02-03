@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Assist;
-use App\Transformer\AssistTransformer;
+use App\Transformer\Assists\AssistTransformer;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use EllipseSynergie\ApiResponse\Contracts\Response;
-use App\Goal;
 
 class AssistController extends Controller
 {
@@ -33,12 +32,12 @@ class AssistController extends Controller
         }
     }
 
-    /*public function getTeam($id){
-        $team = Goal::find($id)->team;
-        return $this->response->withItem($team, new GoalTransformer());
+    public function getTeam($id){
+        $team = Assist::find($id)->team;
+        return $this->response->withItem($team, new AssistTransformer());
     }
 
-    public function getPlayer($id){
+    /*public function getPlayer($id){
         $player = Goal::find($id)->player;
         return $this->response->withItem($player, new GoalTransformer());
     }

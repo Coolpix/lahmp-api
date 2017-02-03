@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Transformer\TeamPlayerTransformer;
-use App\Transformer\TeamTransformer;
+use App\Transformer\Teams\TeamPlayerTransformer;
+use App\Transformer\Teams\TeamTransformer;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use EllipseSynergie\ApiResponse\Contracts\Response;

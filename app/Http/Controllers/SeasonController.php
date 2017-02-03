@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Round;
-use App\Transformer\RoundTransformer;
-use App\Transformer\SeasonRoundsTransformer;
-use App\Transformer\SeasonTeamsTransformer;
-use App\Transformer\SeasonTransformer;
+use App\Transformer\Seasons\SeasonRoundsTransformer;
+use App\Transformer\Seasons\SeasonTeamsTransformer;
+use App\Transformer\Seasons\SeasonTransformer;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Http\Requests;
