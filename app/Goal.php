@@ -39,6 +39,6 @@ class Goal extends Model
      */
     public function assist()
     {
-        return $this->belongsTo('App\Assist');
+        return $this->hasOne('App\Assist');
     }
 }

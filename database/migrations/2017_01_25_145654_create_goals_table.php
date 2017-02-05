@@ -22,6 +22,8 @@ class CreateGoalsTable extends Migration
             $table->foreign('player_id')->references('id')->on('players')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('team_id')->unsigned()->nullable();
             $table->foreign('team_id')->references('id')->on('teams')->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('assist_id')->unsigned()->nullable();
+            $table->foreign('assist_id')->references('id')->on('goals')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

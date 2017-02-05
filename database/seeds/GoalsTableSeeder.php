@@ -15,7 +15,6 @@ class GoalsTableSeeder extends Seeder
             $u->match()->associate(factory(App\Match::class)->make()->save())->save();
             $u->team()->associate(factory(App\Team::class)->make()->save())->save();
             $u->player()->associate(factory(App\Player::class)->make()->save())->save();
-            $u->assist()->associate(factory(App\Assist::class)->make()->save())->save();
         });
     }
 }
