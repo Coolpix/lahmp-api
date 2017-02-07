@@ -10,7 +10,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use EllipseSynergie\ApiResponse\Contracts\Response;
 use App\Match;
-
+/**
+ * @SWG\Info(title="Matches API", version="0.1")
+ */
 class MatchController extends Controller
 {
     protected $response;
@@ -20,6 +22,12 @@ class MatchController extends Controller
         $this->response = $response;
     }
 
+    /**
+     * @SWG\Get(
+     *     path="/api/matches.json",
+     *     @SWG\Response(response="200", description="Matchs List")
+     * )
+     */
     public function index(){
         $matches = Match::paginate(15);
         return $this->response->withPaginator($matches, new MatchTransformer());
