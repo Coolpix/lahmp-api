@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Assist;
 use App\Transformer\Goals\GoalMatchTransformer;
 use App\Transformer\Goals\GoalPlayerTransformer;
 use App\Transformer\Goals\GoalTeamTransformer;
 use App\Transformer\Goals\GoalTransformer;
 use App\Transformer\Matches\MatchTransformer;
+use Illuminate\Contracts\Logging\Log;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -51,30 +53,41 @@ class GoalController extends Controller
         return $this->response->withItem($match, new GoalMatchTransformer());
     }
 
-    public function saveMatch(Request $request){
-        $match = new Match;
-        $match->save();
-        $match->round()->associate($request->round)->save();
-        $match->teams()->attach([$request->teams[0],$request->teams[1]]);
-        return $this->response->withItem($match, new MatchTransformer());
+    public function saveGoal(Request $request){
+        $goal = new Goal;
+        if ($request->assist){
+            $assist = new Assist;
+            $assist -> save();
+            $assist -> match()->associate($request->match)->save();
+            $assist -> player()->associate($request->assist_player)->save();
+            $assist -> team()->associate($request->team)->save();
+        }
+        $goal -> save();
+        $goal -> match()->associate($request->match)->save();
+        $goal -> player()->associate($request->player)->save();
+        $goal -> team()->associate($request->team)->save();
+        if ($request->assist){
+            $goal->assist()->save($assist);
+        }
+        return $this->response->withItem($goal, new GoalTransformer());
     }
 
-    public function updateMatch($match){
+    /*public function updateMatch($match){
         $match = Match::find($match);
         if ($match){
             return $this->response->withItem($match, new MatchTransformer());
         }else{
             return $this->response->errorNotFound('Match Not Found');
         }
-    }
+    }*/
 
-    public function deleteMatch($matchID){
-        $match = Match::find($matchID);
-        if ($match){
-            $match->delete();
-            return $this->response->withItem($match, new MatchTransformer());
+    public function deleteGoal($goalID){
+        $goal = Goal::find($goalID);
+        if ($goal){
+            $goal->delete();
+            return $this->response->withItem($goal, new GoalTransformer());
         }else{
-            return $this->response->errorNotFound('Match Not Found');
+            return $this->response->errorNotFound('Goal Not Found');
         }
     }
 }

@@ -71,8 +71,9 @@ Route::group(['prefix' => 'goals'], function () {
     Route::get('/{id}/team', 'GoalController@getTeam');
     Route::get('/{id}/player', 'GoalController@getPlayer');
     Route::get('/{id}/match', 'GoalController@getMatch');
-    /*Route::post('/', 'GoalController@saveSeason');
-    Route::delete('/{id}', 'SeasonController@deleteSeason');*/
+    Route::get('/{id}/assist', 'GoalController@getAssist');
+    Route::post('/', 'GoalController@saveGoal');
+    Route::delete('/{id}', 'GoalController@deleteGoal');
 });
 
 Route::group(['prefix' => 'assists'], function () {
@@ -82,6 +83,4 @@ Route::group(['prefix' => 'assists'], function () {
     Route::get('/{id}/player', 'AssistController@getPlayer');
     Route::get('/{id}/match', 'AssistController@getMatch');
     Route::get('/{id}/goal', 'AssistController@getGoal');
-    /*Route::post('/', 'GoalController@saveSeason');
-    Route::delete('/{id}', 'SeasonController@deleteSeason');*/
 });

@@ -11,6 +11,14 @@ class Team extends Model
     ];
 
     /**
+     * The matches that belong to the Team.
+     */
+    public function matches()
+    {
+        return $this->belongsToMany('App\Match');
+    }
+
+    /**
      * The players that belong to the team.
      */
     public function players()
