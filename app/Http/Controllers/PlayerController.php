@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Goal;
+use App\Transformer\Players\PlayerGoalTransformer;
 use App\Transformer\Players\PlayerTransformer;
 use App\Transformer\Players\PlayerTeamTransformer;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -41,7 +42,7 @@ class PlayerController extends Controller
 
     public function getGoals($id){
         $goals = Player::find($id)->goals;
-        return $this->response->withItem($goals, new PlayerTeamTransformer());
+        return $this->response->withItem($goals, new PlayerGoalTransformer());
     }
 
     public function savePlayer(Request $request){
