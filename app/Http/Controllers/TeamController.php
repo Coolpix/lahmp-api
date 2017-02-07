@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Transformer\Teams\TeamGoalTransformer;
 use App\Transformer\Teams\TeamPlayerTransformer;
 use App\Transformer\Teams\TeamTransformer;
 use Illuminate\Http\Request;
@@ -46,7 +47,7 @@ class TeamController extends Controller
 
     public function getGoals($id){
         $goals = Team::find($id)->goals;
-        return $this->response->withItem($goals, new TeamPlayerTransformer());
+        return $this->response->withItem($goals, new TeamGoalTransformer());
     }
 
     public function saveTeam(Request $request){
