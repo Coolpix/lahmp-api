@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Round;
+use App\Team;
 use App\Transformer\Seasons\SeasonRoundsTransformer;
 use App\Transformer\Seasons\SeasonTeamsTransformer;
 use App\Transformer\Seasons\SeasonTransformer;
@@ -79,4 +80,32 @@ class SeasonController extends Controller
         }
     }
 
+    public function updateSeason($seasonID, Request $request){
+        $season = Season::find($seasonID);
+        if ($season){
+            $season->update([
+                'name'=>$request->name,
+                'year'=>$request->year
+            ]);
+            foreach ($request->rounds as $round){
+                try {
+                    $roundToSave = Round::findOrFail($round);
+                    $season->rounds()->save($roundToSave);
+                }catch (ModelNotFoundException $ex){
+                    return $this->response->errorNotFound('Round '. $round .' Not Found');
+                }
+            };
+            foreach ($request->teams as $team){
+                try {
+                    $teamToSave = Team::findOrFail($team);
+                    $season->teams()->save($teamToSave);
+                }catch (ModelNotFoundException $ex){
+                    return $this->response->errorNotFound('Team '. $team .' Not Found');
+                }
+            }
+            return $this->response->withItem($season, new SeasonTransformer());
+        }else{
+            return $this->response->errorNotFound('Season Not Found');
+        }
+    }
 }
