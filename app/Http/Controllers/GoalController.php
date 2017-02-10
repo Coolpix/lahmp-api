@@ -7,8 +7,6 @@ use App\Transformer\Goals\GoalMatchTransformer;
 use App\Transformer\Goals\GoalPlayerTransformer;
 use App\Transformer\Goals\GoalTeamTransformer;
 use App\Transformer\Goals\GoalTransformer;
-use App\Transformer\Matches\MatchTransformer;
-use Illuminate\Contracts\Logging\Log;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -71,15 +69,6 @@ class GoalController extends Controller
         }
         return $this->response->withItem($goal, new GoalTransformer());
     }
-
-    /*public function updateMatch($match){
-        $match = Match::find($match);
-        if ($match){
-            return $this->response->withItem($match, new MatchTransformer());
-        }else{
-            return $this->response->errorNotFound('Match Not Found');
-        }
-    }*/
 
     public function deleteGoal($goalID){
         $goal = Goal::find($goalID);

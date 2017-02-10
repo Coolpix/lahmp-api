@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Assist;
 use App\Transformer\Assists\AssistTransformer;
+use App\Transformer\Assists\AssistGoalTransformer;
+use App\Transformer\Assists\AssistMatchTransformer;
+use App\Transformer\Assists\AssistPlayerTransformer;
 use App\Transformer\Assists\AssistTeamTransformer;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
@@ -40,16 +43,16 @@ class AssistController extends Controller
 
     public function getPlayer($id){
         $player = Assist::find($id)->player;
-        return $this->response->withItem($player, new AssistTeamTransformer());
+        return $this->response->withItem($player, new AssistPlayerTransformer());
     }
 
     public function getMatch($id){
         $match = Assist::find($id)->match;
-        return $this->response->withItem($match, new AssistTeamTransformer());
+        return $this->response->withItem($match, new AssistMatchTransformer());
     }
 
     public function getGoal($id){
         $goal = Assist::find($id)->goal;
-        return $this->response->withItem($goal, new AssistTeamTransformer());
+        return $this->response->withItem($goal, new AssistGoalTransformer());
     }
 }

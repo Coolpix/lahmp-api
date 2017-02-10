@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Transformer\Matches\MatchGoalTransformer;
 use App\Transformer\Matches\MatchRoundTransformer;
 use App\Transformer\Matches\MatchTransformer;
 use App\Transformer\Matches\MatchTeamTransformer;
@@ -54,7 +55,7 @@ class MatchController extends Controller
 
     public function getGoals($id){
         $goals = Match::find($id)->goals;
-        return $this->response->withItem($goals, new MatchTeamTransformer());
+        return $this->response->withItem($goals, new MatchGoalTransformer());
     }
 
     public function getBySeason($season){
