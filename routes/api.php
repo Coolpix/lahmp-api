@@ -53,6 +53,7 @@ Route::group(['prefix' => 'rounds'], function () {
     Route::get('/{id}', 'RoundController@getByID');
     Route::get('/season/{season}', 'RoundController@getBySeason');
     Route::post('/', 'RoundController@saveRound');
+    Route::put('/{id}', 'RoundController@updateRound');
     Route::delete('/{id}', 'RoundController@deleteRound');
 });
 

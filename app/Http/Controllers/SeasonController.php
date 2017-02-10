@@ -78,16 +78,6 @@ class SeasonController extends Controller
         return $this->response->withItem($season, new SeasonTransformer());
     }
 
-    public function deleteSeason($seasonID){
-        $season = Season::find($seasonID);
-        if ($season){
-            $season->delete();
-            return $this->response->withItem($season, new SeasonTransformer());
-        }else{
-            return $this->response->errorNotFound('Season Not Found');
-        }
-    }
-
     public function updateSeason($seasonID, Request $request){
         $season = Season::find($seasonID);
         if ($season){
@@ -111,6 +101,16 @@ class SeasonController extends Controller
                     return $this->response->errorNotFound('Team '. $team .' Not Found');
                 }
             }
+            return $this->response->withItem($season, new SeasonTransformer());
+        }else{
+            return $this->response->errorNotFound('Season Not Found');
+        }
+    }
+
+    public function deleteSeason($seasonID){
+        $season = Season::find($seasonID);
+        if ($season){
+            $season->delete();
             return $this->response->withItem($season, new SeasonTransformer());
         }else{
             return $this->response->errorNotFound('Season Not Found');

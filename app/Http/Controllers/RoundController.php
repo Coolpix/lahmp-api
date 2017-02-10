@@ -56,6 +56,27 @@ class RoundController extends Controller
         return $this->response->withItem($round, new RoundTransformer());
     }
 
+    public function updateRound($roundID, Request $request){
+        $round = Round::find($roundID);
+        if ($round){
+            $round->update([
+                'name'=>$request->name
+            ]);
+            $round->season()->associate($request->season)->save();
+            foreach ($request->matches as $match){
+                try {
+                    $matchToSave = Match::findOrFail($match);
+                    $round->matches()->save($matchToSave);
+                }catch (ModelNotFoundException $ex){
+                    return $this->response->errorNotFound('Team '. $match .' Not Found');
+                }
+            };
+            return $this->response->withItem($round, new RoundTransformer());
+        }else{
+            return $this->response->errorNotFound('Round Not Found');
+        }
+    }
+
     public function deleteRound($roundID){
         $round = Round::find($roundID);
         if ($round){
