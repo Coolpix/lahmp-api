@@ -66,6 +66,14 @@ class SeasonController extends Controller
             }catch (ModelNotFoundException $ex){
                 return $this->response->errorNotFound('Round '. $round .' Not Found');
             }
+        };
+        foreach ($request->teams as $team){
+            try {
+                $teamToSave = Team::findOrFail($team);
+                $season->teams()->save($teamToSave);
+            }catch (ModelNotFoundException $ex){
+                return $this->response->errorNotFound('Team '. $team .' Not Found');
+            }
         }
         return $this->response->withItem($season, new SeasonTransformer());
     }
