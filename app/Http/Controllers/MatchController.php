@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Assist;
+use App\Goal;
+use App\Team;
 use App\Transformer\Matches\MatchGoalTransformer;
 use App\Transformer\Matches\MatchRoundTransformer;
 use App\Transformer\Matches\MatchTransformer;
 use App\Transformer\Matches\MatchTeamTransformer;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -73,12 +77,40 @@ class MatchController extends Controller
         return $this->response->withItem($match, new MatchTransformer());
     }
 
-    public function updateMatch($match){
-        $match = Match::find($match);
+    public function updateMatch($matchID, Request $request){
+        $match = Match::find($matchID);
         if ($match){
+            $match->update([
+
+            ]);
+            $match->round()->associate($request->round)->save();
+            try{
+                Team::findOrFail($request->teams[0]);
+                Team::findOrFail($request->teams[1]);
+                $match->teams()->detach();
+                $match->teams()->attach([$request->teams[0],$request->teams[1]]);
+            }catch (ModelNotFoundException $ex){
+                return $this->response->errorNotFound('Any Team Not Found');
+            };
+            foreach ($request->goals as $goal){
+                try {
+                    $goalToSave = Goal::findOrFail($goal);
+                    $match->goals()->save($goalToSave);
+                }catch (ModelNotFoundException $ex){
+                    return $this->response->errorNotFound('Goal '. $goal .' Not Found');
+                }
+            };
+            foreach ($request->assists as $assist){
+                try {
+                    $assistToSave = Assist::findOrFail($assist);
+                    $match->assists()->save($assistToSave);
+                }catch (ModelNotFoundException $ex){
+                    return $this->response->errorNotFound('Assist '. $assist .' Not Found');
+                }
+            };
             return $this->response->withItem($match, new MatchTransformer());
         }else{
-            return $this->response->errorNotFound('Match Not Found');
+            return $this->response->errorNotFound('Round Not Found');
         }
     }
 
