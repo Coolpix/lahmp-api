@@ -50,6 +50,11 @@ class TeamController extends Controller
         return $this->response->withItem($goals, new TeamGoalTransformer());
     }
 
+    public function getMatches($id){
+        $team = Team::find($id)->matches;
+        return $this->response->withItem($team, new TeamPlayerTransformer());
+    }
+
     public function saveTeam(Request $request){
         $team = new Team;
         $team->name = $request->name;
@@ -57,6 +62,7 @@ class TeamController extends Controller
         $team->season = $request->season;
         $team->save();
         $team->players()->attach($request->players);
+        $team->matches()->attach($request->matches);
         return $this->response->withItem($team, new TeamTransformer());
     }
 
