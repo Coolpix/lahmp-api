@@ -45,6 +45,7 @@ Route::group(['prefix' => 'teams'], function () {
     Route::get('/{id}/players', 'TeamController@getPlayers');
     Route::get('/{id}/goals', 'TeamController@getGoals');
     Route::get('/{id}/matches', 'TeamController@getMatches');
+    Route::get('/{id}/assists', 'TeamController@getAssists');
     Route::post('/', 'TeamController@saveTeam');
     Route::delete('/{id}', 'TeamController@deleteTeam');
 });
@@ -86,4 +87,6 @@ Route::group(['prefix' => 'assists'], function () {
     Route::get('/{id}/player', 'AssistController@getPlayer');
     Route::get('/{id}/match', 'AssistController@getMatch');
     Route::get('/{id}/goal', 'AssistController@getGoal');
+    Route::post('/', 'AssistController@saveAssist');
+    Route::delete('/{id}', 'AssistController@deleteAssist');
 });

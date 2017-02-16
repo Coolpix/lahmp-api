@@ -51,6 +51,11 @@ class GoalController extends Controller
         return $this->response->withItem($match, new GoalMatchTransformer());
     }
 
+    public function getAssist($id){
+        $match = Goal::find($id)->assist;
+        return $this->response->withItem($match, new GoalMatchTransformer());
+    }
+
     public function saveGoal(Request $request){
         $goal = new Goal;
         if ($request->assist){

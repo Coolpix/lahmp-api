@@ -55,4 +55,24 @@ class AssistController extends Controller
         $goal = Assist::find($id)->goal;
         return $this->response->withItem($goal, new AssistGoalTransformer());
     }
+
+    public function saveAssist(Request $request){
+        $assist = new Assist();
+        $assist -> save();
+        $assist -> goal()->associate($request->goal)->save();
+        $assist -> player()->associate($request->player)->save();
+        $assist -> team()->associate($request->team)->save();
+        $assist -> match()->associate($request->match)->save();
+        return $this->response->withItem($assist, new AssistTransformer());
+    }
+
+    public function deleteAssist($assistID){
+        $assist = Assist::find($assistID);
+        if ($assist){
+            $assist->delete();
+            return $this->response->withItem($assist, new AssistTransformer());
+        }else{
+            return $this->response->errorNotFound('Assist Not Found');
+        }
+    }
 }

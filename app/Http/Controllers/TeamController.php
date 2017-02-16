@@ -55,6 +55,11 @@ class TeamController extends Controller
         return $this->response->withItem($team, new TeamPlayerTransformer());
     }
 
+    public function getAssists($id){
+        $team = Team::find($id)->assists;
+        return $this->response->withItem($team, new TeamPlayerTransformer());
+    }
+
     public function saveTeam(Request $request){
         $team = new Team;
         $team->name = $request->name;
