@@ -3,7 +3,6 @@ php:
   - 7.0
 install:
   - composer install --no-interaction
-  - chmod -R 777 app/storage
   - php artisan migrate:install --no-interaction -vvv
 script:
   - phpunit --verbose
