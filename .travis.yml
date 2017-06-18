@@ -4,9 +4,6 @@ php:
 install:
   - composer install --no-interaction
   - php artisan migrate:install --no-interaction -vvv
-script:
-  - phpunit --verbose
-  - php artisan migrate --no-interaction -vvv
 deploy:
   provider: elasticbeanstalk
   access_key_id: "AKIAJX6F3DQIKSEB3INQ"
