@@ -1,10 +1,8 @@
 language: php
 php:
   - 7.0
-sudo: true
 install:
   - composer install --no-interaction
-  - mv .env.travis .env
   - php artisan key:generate
   - php artisan migrate:refresh
 deploy:
