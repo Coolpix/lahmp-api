@@ -1,0 +1,12 @@
+language: php
+php:
+  - 7.0
+deploy:
+  provider: elasticbeanstalk
+  access_key_id: "AKIAJX6F3DQIKSEB3INQ"
+  secret_access_key:
+    secure: "uFY2YiA/DfZCgpUTCES6Mt5X3plB7cnVa71vCvwY"
+  region: "us-west-2"
+  app: "lahmp"
+  env: "Sample-env-1"
+  bucket_name: "elasticbeanstalk-us-west-2-727062439674"
