@@ -1,8 +1,11 @@
 language: php
 php:
   - 7.0
+sudo: true
 install:
   - composer install --no-interaction
+  - php artisan key:generate
+  - php artisan migrate:refresh
 deploy:
   provider: elasticbeanstalk
   access_key_id: "AKIAJX6F3DQIKSEB3INQ"
