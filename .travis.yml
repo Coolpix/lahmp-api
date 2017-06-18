@@ -4,6 +4,7 @@ php:
 sudo: true
 install:
   - composer install --no-interaction
+  - mv .env.travis .env
   - php artisan key:generate
   - php artisan migrate:refresh
 deploy:
