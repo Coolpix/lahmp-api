@@ -1,10 +1,15 @@
 <?php
 if (!defined('RDS_HOSTNAME')) {
-    define('RDS_HOSTNAME', $_SERVER['RDS_HOSTNAME']);
-    define('RDS_USERNAME', $_SERVER['RDS_USERNAME']);
-    define('RDS_PASSWORD', $_SERVER['RDS_PASSWORD']);
-    define('RDS_PORT', $_SERVER['RDS_PORT']);
-    define('RDS_DB_NAME', $_SERVER['RDS_DB_NAME']);
+    $RDS_HOSTNAME = (isset($_SERVER['RDS_HOSTNAME'])?$_SERVER['RDS_HOSTNAME']:env('DB_HOST', '127.0.0.1'));
+    $RDS_USERNAME = (isset($_SERVER['RDS_USERNAME'])?$_SERVER['RDS_USERNAME']:env('DB_USERNAME', 'forge'));
+    $RDS_PASSWORD = (isset($_SERVER['RDS_PASSWORD'])?$_SERVER['RDS_PASSWORD']:env('DB_PASSWORD', ''));
+    $RDS_PORT = (isset($_SERVER['RDS_PORT'])?$_SERVER['RDS_PORT']:env('DB_PORT', '5432'));
+    $RDS_DB_NAME = (isset($_SERVER['RDS_DB_NAME'])?$_SERVER['RDS_DB_NAME']:env('DB_DATABASE', 'forge'));
+    define('RDS_HOSTNAME', $RDS_HOSTNAME);
+    define('RDS_USERNAME', $RDS_USERNAME);
+    define('RDS_PASSWORD', $RDS_PASSWORD);
+    define('RDS_PORT', $RDS_PORT);
+    define('RDS_DB_NAME', $RDS_DB_NAME);
 }
 
 return [

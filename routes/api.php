@@ -17,7 +17,7 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
 
-Route::group(['prefix' => 'players'], function () {
+Route::group(['middleware' => 'auth:api', 'prefix' => 'players'], function () {
     Route::get('/', 'PlayerController@index');
     Route::get('/{id}', 'PlayerController@getByID');
     Route::get('/{id}/teams', 'PlayerController@getTeams');
@@ -26,7 +26,7 @@ Route::group(['prefix' => 'players'], function () {
     Route::delete('/{id}', 'PlayerController@deletePlayer');
 });
 
-Route::group(['prefix' => 'matches'], function () {
+Route::group(['middleware' => 'auth:api', 'prefix' => 'matches'], function () {
     Route::get('/', 'MatchController@index');
     Route::get('/{id}', 'MatchController@getByID');
     Route::get('/{id}/teams', 'MatchController@getTeams');
@@ -38,7 +38,7 @@ Route::group(['prefix' => 'matches'], function () {
     Route::delete('/{id}', 'MatchController@deleteMatch');
 });
 
-Route::group(['prefix' => 'teams'], function () {
+Route::group(['middleware' => 'auth:api', 'prefix' => 'teams'], function () {
     Route::get('/', 'TeamController@index');
     Route::get('/{id}', 'TeamController@getByID');
     Route::get('/season/{season}', 'TeamController@getBySeason');
@@ -50,7 +50,7 @@ Route::group(['prefix' => 'teams'], function () {
     Route::delete('/{id}', 'TeamController@deleteTeam');
 });
 
-Route::group(['prefix' => 'rounds'], function () {
+Route::group(['middleware' => 'auth:api', 'prefix' => 'rounds'], function () {
     Route::get('/', 'RoundController@index');
     Route::get('/{id}', 'RoundController@getByID');
     Route::get('/season/{season}', 'RoundController@getBySeason');
@@ -59,7 +59,7 @@ Route::group(['prefix' => 'rounds'], function () {
     Route::delete('/{id}', 'RoundController@deleteRound');
 });
 
-Route::group(['prefix' => 'seasons'], function () {
+Route::group(['middleware' => 'auth:api', 'prefix' => 'seasons'], function () {
     Route::get('/', 'SeasonController@index');
     Route::get('/{id}', 'SeasonController@getByID');
     Route::get('/{id}/rounds', 'SeasonController@getRounds');
@@ -69,7 +69,7 @@ Route::group(['prefix' => 'seasons'], function () {
     Route::delete('/{id}', 'SeasonController@deleteSeason');
 });
 
-Route::group(['prefix' => 'goals'], function () {
+Route::group(['middleware' => 'auth:api', 'prefix' => 'goals'], function () {
     Route::get('/', 'GoalController@index');
     Route::get('/{id}', 'GoalController@getByID');
     Route::get('/{id}/team', 'GoalController@getTeam');
@@ -80,7 +80,7 @@ Route::group(['prefix' => 'goals'], function () {
     Route::delete('/{id}', 'GoalController@deleteGoal');
 });
 
-Route::group(['prefix' => 'assists'], function () {
+Route::group(['middleware' => 'auth:api', 'prefix' => 'assists'], function () {
     Route::get('/', 'AssistController@index');
     Route::get('/{id}', 'AssistController@getByID');
     Route::get('/{id}/team', 'AssistController@getTeam');
@@ -90,3 +90,9 @@ Route::group(['prefix' => 'assists'], function () {
     Route::post('/', 'AssistController@saveAssist');
     Route::delete('/{id}', 'AssistController@deleteAssist');
 });
+
+Route::group(['prefix' => 'auth'], function () {
+    Route::post('/token', 'Auth\DefaultController@authenticate');
+    Route::post('/refresh', 'Auth\DefaultController@refreshToken');
+});
+
