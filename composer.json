@@ -10,7 +10,7 @@
         "darkaonline/l5-swagger": "~4.0",
         "ellipsesynergie/api-response": "^0.12.3",
         "laravel/framework": "5.4.*",
-        "laravel/passport": "^2.0",
+        "laravel/passport": "^3.0",
         "swagger-api/swagger-ui": "^2.2"
     },
     "require-dev": {
