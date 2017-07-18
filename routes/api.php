@@ -94,5 +94,6 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'assists'], function () {
 Route::group(['prefix' => 'auth'], function () {
     Route::post('/token', 'Auth\DefaultController@authenticate');
     Route::post('/refresh', 'Auth\DefaultController@refreshToken');
+    Route::post('/register', 'Auth\DefaultController@register');
 });
 
