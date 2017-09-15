@@ -20,7 +20,7 @@ class TeamController extends Controller
     }
 
     public function index(){
-        $teams = Team::paginate(15);
+        $teams = Team::jsonPaginate(15);
         return $this->response->withPaginator($teams, new TeamTransformer());
     }
 

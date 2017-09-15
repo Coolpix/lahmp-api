@@ -23,7 +23,7 @@ class SeasonController extends Controller
     }
 
     public function index(){
-        $seasons = Season::paginate(15);
+        $seasons = Season::jsonPaginate();
         return $this->response->withPaginator($seasons, new SeasonTransformer());
     }
 

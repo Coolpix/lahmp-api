@@ -23,7 +23,7 @@ class AssistController extends Controller
     }
 
     public function index(){
-        $assists = Assist::paginate(15);
+        $assists = Assist::jsonPaginate(15);
         return $this->response->withPaginator($assists, new AssistTransformer());
     }
 

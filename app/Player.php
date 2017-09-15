@@ -33,4 +33,5 @@ class Player extends Model
     {
         return $this->hasMany('App\Assist');
     }
+
 }

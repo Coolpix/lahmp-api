@@ -21,7 +21,7 @@ class DefaultController extends Controller
      */
     public function __construct()
     {
-        $this->client = DB::table('oauth_clients')->where('id', 2)->first();
+        $this->client = DB::table('oauth_clients')->where('password_client', 1)->first();
     }
 
     /**
@@ -108,6 +108,7 @@ class DefaultController extends Controller
             'POST'
         );
 
-        return \Route::dispatch($proxy);
+        return Route::dispatch($proxy);
     }
+
 }

@@ -170,8 +170,8 @@ return [
 
         Barryvdh\Debugbar\ServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
-        \L5Swagger\L5SwaggerServiceProvider::class,
-
+        L5Swagger\L5SwaggerServiceProvider::class,
+        Spatie\JsonApiPaginate\JsonApiPaginateServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -180,6 +180,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
 
     ],
 

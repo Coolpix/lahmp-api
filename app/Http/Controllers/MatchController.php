@@ -34,7 +34,7 @@ class MatchController extends Controller
      * )
      */
     public function index(){
-        $matches = Match::paginate(15);
+        $matches = Match::jsonPaginate(15);
         return $this->response->withPaginator($matches, new MatchTransformer());
     }
 

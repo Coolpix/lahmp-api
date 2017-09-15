@@ -23,7 +23,7 @@ class GoalController extends Controller
     }
 
     public function index(){
-        $goals = Goal::paginate(15);
+        $goals = Goal::jsonPaginate(15);
         return $this->response->withPaginator($goals, new GoalTransformer());
     }
 

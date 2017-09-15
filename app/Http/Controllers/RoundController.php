@@ -20,7 +20,7 @@ class RoundController extends Controller
     }
 
     public function index(){
-        $rounds = Round::paginate(15);
+        $rounds = Round::jsonPaginate(15);
         return $this->response->withPaginator($rounds, new RoundTransformer());
     }
 

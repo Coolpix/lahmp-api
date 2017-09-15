@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Assist;
 use App\Goal;
+use App\Transformer\Players\PlayerAssistTransformer;
 use App\Transformer\Players\PlayerGoalTransformer;
 use App\Transformer\Players\PlayerTransformer;
 use App\Transformer\Players\PlayerTeamTransformer;
@@ -22,7 +24,7 @@ class PlayerController extends Controller
     }
 
     public function index(){
-        $players = Player::paginate(15);
+        $players = Player::jsonPaginate();
         return $this->response->withPaginator($players, new PlayerTransformer());
     }
 
@@ -45,6 +47,11 @@ class PlayerController extends Controller
         return $this->response->withItem($goals, new PlayerGoalTransformer());
     }
 
+    public function getAssists($id){
+        $assits = Player::find($id)->assists();
+        return $this->response->withItem($assits, new PlayerAssistTransformer());
+    }
+
     public function savePlayer(Request $request){
         $player = new Player;
         $player->photo = $request->photo;
@@ -56,6 +63,12 @@ class PlayerController extends Controller
             $player->goals()->save($goalToSave);
         }catch (ModelNotFoundException $ex){
             return $this->response->errorNotFound('Goal '. $request->goal .' Not Found');
+        }
+        try {
+            $assistToSave = Assist::findOrFail($request->assist);
+            $player->assists()->save($assistToSave);
+        }catch (ModelNotFoundException $ex){
+            return $this->response->errorNotFound('Assist '. $request->assist .' Not Found');
         }
         return $this->response->withItem($player, new PlayerTransformer());
     }

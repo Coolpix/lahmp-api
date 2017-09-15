@@ -22,6 +22,7 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'players'], function () {
     Route::get('/{id}', 'PlayerController@getByID');
     Route::get('/{id}/teams', 'PlayerController@getTeams');
     Route::get('/{id}/goals', 'PlayerController@getGoals');
+    Route::get('/{id}/assists', 'PlayerController@getAssists');
     Route::post('/', 'PlayerController@savePlayer');
     Route::delete('/{id}', 'PlayerController@deletePlayer');
 });
@@ -95,5 +96,6 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('/token', 'Auth\DefaultController@authenticate');
     Route::post('/refresh', 'Auth\DefaultController@refreshToken');
     Route::post('/register', 'Auth\DefaultController@register');
+    Route::post('/email', 'Auth\ForgotPasswordController@getResetToken');
+    Route::post('/reset', 'Auth\ResetPasswordController@reset');
 });
-
