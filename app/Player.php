@@ -34,4 +34,11 @@ class Player extends Model
         return $this->hasMany('App\Assist');
     }
 
+    /**
+     * The season that belong to the player.
+     */
+    public function season()
+    {
+        return $this->belongsTo('App\Season');
+    }
 }

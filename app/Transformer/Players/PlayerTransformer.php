@@ -11,7 +11,8 @@ class PlayerTransformer {
             'name' => $player->name,
             'teams' => $player->teams,
             'goals' => $player->goals,
-            'assists' => $player->assists
+            'assists' => $player->assists,
+            'season' => $player->season
         ];
     }
 }

@@ -56,6 +56,13 @@ class AssistController extends Controller
         return $this->response->withItem($goal, new AssistGoalTransformer());
     }
 
+    public function getBySeason($season){
+        $matches = Assist::whereHas('season',function($query) use ($season){
+            $query -> where('year',"=",$season);
+        })->get();
+        return $this->response->withCollection($matches, new AssistTransformer());
+    }
+
     public function saveAssist(Request $request){
         $assist = new Assist();
         $assist -> save();
@@ -63,6 +70,7 @@ class AssistController extends Controller
         $assist -> player()->associate($request->player)->save();
         $assist -> team()->associate($request->team)->save();
         $assist -> match()->associate($request->match)->save();
+        $assist->season()->associate($request->season)->save();
         return $this->response->withItem($assist, new AssistTransformer());
     }
 

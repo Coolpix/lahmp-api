@@ -19,6 +19,22 @@ class Season extends Model
     }
 
     /**
+     * The players that belong to the season.
+     */
+    public function players()
+    {
+        return $this->hasMany('App\Player');
+    }
+
+    /**
+     * The matches that belong to the season.
+     */
+    public function matches()
+    {
+        return $this->hasMany('App\Match');
+    }
+
+    /**
      * The teams that belong to the season.
      */
     public function teams()

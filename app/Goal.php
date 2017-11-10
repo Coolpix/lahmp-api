@@ -41,4 +41,12 @@ class Goal extends Model
     {
         return $this->hasOne('App\Assist');
     }
+
+    /**
+     * The season that belong to the goal.
+     */
+    public function season()
+    {
+        return $this->belongsTo('App\Season');
+    }
 }

@@ -41,4 +41,12 @@ class Assist extends Model
     {
         return $this->belongsTo('App\Match');
     }
+
+    /**
+     * The season that belong to the assist.
+     */
+    public function season()
+    {
+        return $this->belongsTo('App\Season');
+    }
 }

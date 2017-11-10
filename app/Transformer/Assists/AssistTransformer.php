@@ -10,7 +10,8 @@ class AssistTransformer {
             'team' => $assist->team,
             'player' => $assist->player,
             'match' => $assist->match,
-            'goal' => $assist->goal
+            'goal' => $assist->goal,
+            'season' => $assist->season
         ];
     }
 }

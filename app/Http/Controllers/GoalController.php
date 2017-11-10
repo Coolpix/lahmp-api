@@ -56,6 +56,13 @@ class GoalController extends Controller
         return $this->response->withItem($match, new GoalMatchTransformer());
     }
 
+    public function getBySeason($season){
+        $matches = Goal::whereHas('season',function($query) use ($season){
+            $query -> where('year',"=",$season);
+        })->get();
+        return $this->response->withCollection($matches, new GoalTransformer());
+    }
+
     public function saveGoal(Request $request){
         $goal = new Goal;
         if ($request->assist){
@@ -69,6 +76,7 @@ class GoalController extends Controller
         $goal -> match()->associate($request->match)->save();
         $goal -> player()->associate($request->player)->save();
         $goal -> team()->associate($request->team)->save();
+        $goal -> season()->associate($request->season)->save();
         if ($request->assist){
             $goal->assist()->save($assist);
         }

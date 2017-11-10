@@ -63,8 +63,8 @@ class MatchController extends Controller
     }
 
     public function getBySeason($season){
-        $matches = Match::whereHas('teams',function($query) use ($season){
-            $query -> where('season',"=",$season);
+        $matches = Match::whereHas('season',function($query) use ($season){
+            $query -> where('year',"=",$season);
         })->get();
         return $this->response->withCollection($matches, new MatchTransformer());
     }
@@ -74,6 +74,7 @@ class MatchController extends Controller
         $match->save();
         $match->round()->associate($request->round)->save();
         $match->teams()->attach([$request->teams[0],$request->teams[1]]);
+        $match->season()->associate($request->season)->save();
         return $this->response->withItem($match, new MatchTransformer());
     }
 
@@ -84,6 +85,7 @@ class MatchController extends Controller
 
             ]);
             $match->round()->associate($request->round)->save();
+            $match->season()->associate($request->season)->save();
             try{
                 Team::findOrFail($request->teams[0]);
                 Team::findOrFail($request->teams[1]);

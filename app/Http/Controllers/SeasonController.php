@@ -23,7 +23,7 @@ class SeasonController extends Controller
     }
 
     public function index(){
-        $seasons = Season::jsonPaginate();
+        $seasons = Season::orderBy('year','desc')->jsonPaginate(20);
         return $this->response->withPaginator($seasons, new SeasonTransformer());
     }
 

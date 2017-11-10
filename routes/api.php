@@ -23,7 +23,9 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'players'], function () {
     Route::get('/{id}/teams', 'PlayerController@getTeams');
     Route::get('/{id}/goals', 'PlayerController@getGoals');
     Route::get('/{id}/assists', 'PlayerController@getAssists');
+    Route::get('/season/{season}', 'PlayerController@getBySeason');
     Route::post('/', 'PlayerController@savePlayer');
+    Route::put('/{id}', 'PlayerController@updatePlayer');
     Route::delete('/{id}', 'PlayerController@deletePlayer');
 });
 
@@ -77,6 +79,7 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'goals'], function () {
     Route::get('/{id}/player', 'GoalController@getPlayer');
     Route::get('/{id}/match', 'GoalController@getMatch');
     Route::get('/{id}/assist', 'GoalController@getAssist');
+    Route::get('/season/{season}', 'GoalController@getBySeason');
     Route::post('/', 'GoalController@saveGoal');
     Route::delete('/{id}', 'GoalController@deleteGoal');
 });
@@ -88,6 +91,7 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'assists'], function () {
     Route::get('/{id}/player', 'AssistController@getPlayer');
     Route::get('/{id}/match', 'AssistController@getMatch');
     Route::get('/{id}/goal', 'AssistController@getGoal');
+    Route::get('/season/{season}', 'AssistController@getBySeason');
     Route::post('/', 'AssistController@saveAssist');
     Route::delete('/{id}', 'AssistController@deleteAssist');
 });
