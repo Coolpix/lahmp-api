@@ -23,7 +23,7 @@ class SeasonController extends Controller
     }
 
     public function index(){
-        $seasons = Season::orderBy('year','desc')->jsonPaginate(20);
+        $seasons = Season::orderBy('year','desc')->jsonPaginate(100);
         return $this->response->withPaginator($seasons, new SeasonTransformer());
     }
 
@@ -54,6 +54,15 @@ class SeasonController extends Controller
         }
     }
 
+    public function getPlayers($id){
+        $teams = Season::find($id)->players;
+        if(!$teams){
+            return $this->response->errorNotFound('Season Not Found');
+        }else{
+            return $this->response->withItem($teams, new SeasonTeamsTransformer());
+        }
+    }
+
     public function saveSeason(Request $request){
         $season = new Season;
         $season->name = $request->name;
@@ -73,6 +82,14 @@ class SeasonController extends Controller
                 $season->teams()->save($teamToSave);
             }catch (ModelNotFoundException $ex){
                 return $this->response->errorNotFound('Team '. $team .' Not Found');
+            }
+        }
+        foreach ($request->players as $player){
+            try {
+                $playerToSave = Player::findOrFail($player);
+                $season->players()->save($playerToSave);
+            }catch (ModelNotFoundException $ex){
+                return $this->response->errorNotFound('Player '. $team .' Not Found');
             }
         }
         return $this->response->withItem($season, new SeasonTransformer());
@@ -99,6 +116,14 @@ class SeasonController extends Controller
                     $season->teams()->save($teamToSave);
                 }catch (ModelNotFoundException $ex){
                     return $this->response->errorNotFound('Team '. $team .' Not Found');
+                }
+            }
+            foreach ($request->players as $player){
+                try {
+                    $playerToSave = Player::findOrFail($player);
+                    $season->players()->save($playerToSave);
+                }catch (ModelNotFoundException $ex){
+                    return $this->response->errorNotFound('Player '. $player .' Not Found');
                 }
             }
             return $this->response->withItem($season, new SeasonTransformer());
