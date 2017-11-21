@@ -64,10 +64,26 @@ class TeamController extends Controller
         $team = new Team;
         $team->name = $request->name;
         $team->logo = $request->logo;
-        $team->season = $request->season;
+        $team->season()->associate($request->season)->save();
         $team->save();
         $team->players()->attach($request->players);
         $team->matches()->attach($request->matches);
+        foreach ($request->assists as $assist){
+            try {
+                $assistToSave = Assist::findOrFail($assist);
+                $team->assists()->save($assistToSave);
+            }catch (ModelNotFoundException $ex){
+                return $this->response->errorNotFound('Assist '. $assist .' Not Found');
+            }
+        }
+        foreach ($request->goals as $goals){
+            try {
+                $agoalToSave = Goal::findOrFail($goal);
+                $team->goals()->save($agoalToSave);
+            }catch (ModelNotFoundException $ex){
+                return $this->response->errorNotFound('Goal '. $goal .' Not Found');
+            }
+        }
         return $this->response->withItem($team, new TeamTransformer());
     }
 

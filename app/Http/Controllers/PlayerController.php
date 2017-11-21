@@ -66,17 +66,21 @@ class PlayerController extends Controller
         $player->save();
         $player->teams()->attach($request->team);
         $player->season()->associate($request->season)->save();
-        try {
-            $goalToSave = Goal::findOrFail($request->goal);
-            $player->goals()->save($goalToSave);
-        }catch (ModelNotFoundException $ex){
-            return $this->response->errorNotFound('Goal '. $request->goal .' Not Found');
+        foreach ($request->goals as $goal){
+            try {
+                $goalToSave = Goal::findOrFail($goal);
+                $player->goals()->save($goalToSave);
+            }catch (ModelNotFoundException $ex){
+                return $this->response->errorNotFound('Goal '. $goal .' Not Found');
+            }
         }
-        try {
-            $assistToSave = Assist::findOrFail($request->assist);
-            $player->assists()->save($assistToSave);
-        }catch (ModelNotFoundException $ex){
-            return $this->response->errorNotFound('Assist '. $request->assist .' Not Found');
+        foreach ($request->assists as $assist){
+            try {
+                $assistToSave = Assist::findOrFail($assist);
+                $player->assists()->save($assistToSave);
+            }catch (ModelNotFoundException $ex){
+                return $this->response->errorNotFound('Assist '. $assist .' Not Found');
+            }
         }
         return $this->response->withItem($player, new PlayerTransformer());
     }
