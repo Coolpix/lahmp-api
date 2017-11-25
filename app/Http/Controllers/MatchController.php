@@ -69,6 +69,13 @@ class MatchController extends Controller
         return $this->response->withCollection($matches, new MatchTransformer());
     }
 
+    public function getByRound($round){
+        $matches = Match::whereHas('round',function($query) use ($round){
+            $query -> where('id',"=",$round);
+        })->get();
+        return $this->response->withCollection($matches, new MatchTransformer());
+    }
+
     public function saveMatch(Request $request){
         $match = new Match;
         $match->save();

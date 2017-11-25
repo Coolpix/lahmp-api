@@ -32,6 +32,7 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'players'], function () {
 Route::group(['middleware' => 'auth:api', 'prefix' => 'matches'], function () {
     Route::get('/', 'MatchController@index');
     Route::get('/{id}', 'MatchController@getByID');
+    Route::get('/round/{round}', 'MatchController@getByRound');
     Route::get('/{id}/teams', 'MatchController@getTeams');
     Route::get('/{id}/round', 'MatchController@getRound');
     Route::get('/{id}/goals', 'MatchController@getGoals');

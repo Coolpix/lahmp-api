@@ -11,7 +11,8 @@ class SeasonTransformer {
             'year' => $season->year,
             'rounds' => $season->rounds,
             'teams' => $season->teams,
-            'players' => $season->players
+            'players' => $season->players,
+            'matches' => $season->matches
         ];
     }
 }
