@@ -44,9 +44,11 @@ class PlayerController extends Controller
         return $this->response->withCollection($players, new PlayerTransformer());
     }
 
-    public function getTeams($id){
-        $teams = Player::find($id)->teams;
-        return $this->response->withItem($teams, new PlayerTeamTransformer());
+    public function getByTeams($teamId){
+        $players = Player::whereHas('team',function($query) use ($teamId){
+            $query -> where('team_id',"=",$teamId);
+        })->get();
+        return $this->response->withCollection($players, new PlayerTransformer());
     }
 
     public function getGoals($id){
@@ -64,7 +66,7 @@ class PlayerController extends Controller
         $player->photo = $request->photo;
         $player->name = $request->name;
         $player->save();
-        $player->teams()->attach($request->team);
+        $player->teams()->associate($request->team)->save();
         $player->season()->associate($request->season)->save();
         foreach ($request->goals as $goal){
             try {
@@ -93,10 +95,10 @@ class PlayerController extends Controller
                 'photo'=>$request->photo
             ]);
             $player->season()->associate($request->season)->save();
-            $player->teams()->attach($request->team);
+            $player->team()->associate($request->team)->save();
             foreach ($request->goals as $goal){
                 try {
-                    $goalToSave = Match::findOrFail($goal);
+                    $goalToSave = Goal::findOrFail($goal);
                     $player->goals()->save($goalToSave);
                 }catch (ModelNotFoundException $ex){
                     return $this->response->errorNotFound('Goal '. $goal .' Not Found');
@@ -104,7 +106,7 @@ class PlayerController extends Controller
             };
             foreach ($request->assists as $assist){
                 try {
-                    $assistToSave = Match::findOrFail($assist);
+                    $assistToSave = Assist::findOrFail($assist);
                     $player->assists()->save($assistToSave);
                 }catch (ModelNotFoundException $ex){
                     return $this->response->errorNotFound('Assist '. $assist .' Not Found');

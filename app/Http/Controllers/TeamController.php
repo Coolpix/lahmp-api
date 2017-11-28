@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Transformer\Teams\TeamAssistsTransformer;
 use App\Transformer\Teams\TeamGoalTransformer;
+use App\Transformer\Teams\TeamMatchesTransformer;
 use App\Transformer\Teams\TeamPlayerTransformer;
 use App\Transformer\Teams\TeamTransformer;
 use Illuminate\Http\Request;
@@ -52,22 +54,30 @@ class TeamController extends Controller
 
     public function getMatches($id){
         $team = Team::find($id)->matches;
-        return $this->response->withItem($team, new TeamPlayerTransformer());
+        return $this->response->withItem($team, new TeamMatchesTransformer());
     }
 
     public function getAssists($id){
         $team = Team::find($id)->assists;
-        return $this->response->withItem($team, new TeamPlayerTransformer());
+        return $this->response->withItem($team, new TeamAssistsTransformer());
     }
 
     public function saveTeam(Request $request){
         $team = new Team;
         $team->name = $request->name;
         $team->logo = $request->logo;
+        $team->mini_logo = $request->mini_logo;
         $team->season()->associate($request->season)->save();
         $team->save();
-        $team->players()->attach($request->players);
         $team->matches()->attach($request->matches);
+        foreach ($request->players as $player){
+            try {
+                $playerToSave = Player::findOrFail($player);
+                $team->assists()->save($playerToSave);
+            }catch (ModelNotFoundException $ex){
+                return $this->response->errorNotFound('Player '. $player .' Not Found');
+            }
+        }
         foreach ($request->assists as $assist){
             try {
                 $assistToSave = Assist::findOrFail($assist);
@@ -76,10 +86,10 @@ class TeamController extends Controller
                 return $this->response->errorNotFound('Assist '. $assist .' Not Found');
             }
         }
-        foreach ($request->goals as $goals){
+        foreach ($request->goals as $goal){
             try {
-                $agoalToSave = Goal::findOrFail($goal);
-                $team->goals()->save($agoalToSave);
+                $goalToSave = Goal::findOrFail($goal);
+                $team->goals()->save($goalToSave);
             }catch (ModelNotFoundException $ex){
                 return $this->response->errorNotFound('Goal '. $goal .' Not Found');
             }

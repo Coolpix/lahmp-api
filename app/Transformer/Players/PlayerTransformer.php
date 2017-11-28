@@ -9,7 +9,7 @@ class PlayerTransformer {
             'id' => $player->id,
             'photo' => $player->photo,
             'name' => $player->name,
-            'teams' => $player->teams,
+            'team' => $player->team,
             'goals' => $player->goals,
             'assists' => $player->assists,
             'season' => $player->season

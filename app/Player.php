@@ -11,11 +11,11 @@ class Player extends Model
     ];
 
     /**
-     * The teams that belong to the player.
+     * The team that belong to the player.
      */
-    public function teams()
+    public function team()
     {
-        return $this->belongsToMany('App\Team');
+        return $this->belongsTo('App\Team');
     }
 
     /**
