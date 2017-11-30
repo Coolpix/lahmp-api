@@ -8,8 +8,8 @@ class TeamTransformer {
         return [
             'id' => $team->id,
             'name' => $team->name,
-            'photo' => $team->logo,
-            'logo' => $team->mini_logo,
+            'logo' => $team->logo,
+            'mini_logo' => $team->mini_logo,
             'points' => $team->points,
             'season' => $team->season,
             'players' => $team->players,

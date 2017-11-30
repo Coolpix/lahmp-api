@@ -20,10 +20,10 @@ Route::get('/user', function (Request $request) {
 Route::group(['middleware' => 'auth:api', 'prefix' => 'players'], function () {
     Route::get('/', 'PlayerController@index');
     Route::get('/{id}', 'PlayerController@getByID');
-    Route::get('/{id}/teams', 'PlayerController@getTeams');
     Route::get('/{id}/goals', 'PlayerController@getGoals');
     Route::get('/{id}/assists', 'PlayerController@getAssists');
     Route::get('/season/{season}', 'PlayerController@getBySeason');
+    Route::get('/team/{id}', 'PlayerController@getByTeam');
     Route::post('/', 'PlayerController@savePlayer');
     Route::put('/{id}', 'PlayerController@updatePlayer');
     Route::delete('/{id}', 'PlayerController@deletePlayer');

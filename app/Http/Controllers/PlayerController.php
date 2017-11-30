@@ -44,7 +44,7 @@ class PlayerController extends Controller
         return $this->response->withCollection($players, new PlayerTransformer());
     }
 
-    public function getByTeams($teamId){
+    public function getByTeam($teamId){
         $players = Player::whereHas('team',function($query) use ($teamId){
             $query -> where('team_id',"=",$teamId);
         })->get();
@@ -66,7 +66,7 @@ class PlayerController extends Controller
         $player->photo = $request->photo;
         $player->name = $request->name;
         $player->save();
-        $player->teams()->associate($request->team)->save();
+        $player->team()->associate($request->team)->save();
         $player->season()->associate($request->season)->save();
         foreach ($request->goals as $goal){
             try {
