@@ -63,6 +63,13 @@ class GoalController extends Controller
         return $this->response->withCollection($matches, new GoalTransformer());
     }
 
+    public function getByMatch($match){
+        $matches = Goal::whereHas('match',function($query) use ($match){
+            $query -> where('id',"=",$match);
+        })->get();
+        return $this->response->withCollection($matches, new GoalTransformer());
+    }
+
     public function saveGoal(Request $request){
         $goal = new Goal;
         if ($request->assist){

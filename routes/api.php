@@ -79,6 +79,7 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'goals'], function () {
     Route::get('/{id}/team', 'GoalController@getTeam');
     Route::get('/{id}/player', 'GoalController@getPlayer');
     Route::get('/{id}/match', 'GoalController@getMatch');
+    Route::get('/match/{id}', 'GoalController@getByMatch');
     Route::get('/{id}/assist', 'GoalController@getAssist');
     Route::get('/season/{season}', 'GoalController@getBySeason');
     Route::post('/', 'GoalController@saveGoal');
