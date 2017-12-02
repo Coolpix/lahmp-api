@@ -7,10 +7,8 @@ use App\Goal;
 use App\Transformer\Players\PlayerAssistTransformer;
 use App\Transformer\Players\PlayerGoalTransformer;
 use App\Transformer\Players\PlayerTransformer;
-use App\Transformer\Players\PlayerTeamTransformer;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use App\Http\Requests;
 use EllipseSynergie\ApiResponse\Contracts\Response;
 use App\Player;
 
