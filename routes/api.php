@@ -68,6 +68,7 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'seasons'], function () {
     Route::get('/{id}', 'SeasonController@getByID');
     Route::get('/{id}/rounds', 'SeasonController@getRounds');
     Route::get('/{id}/teams', 'SeasonController@getTeams');
+    Route::get('/{id}/players', 'SeasonController@getPlayers');
     Route::post('/', 'SeasonController@saveSeason');
     Route::put('/{id}', 'SeasonController@updateSeason');
     Route::delete('/{id}', 'SeasonController@deleteSeason');
@@ -98,7 +99,7 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'assists'], function () {
     Route::delete('/{id}', 'AssistController@deleteAssist');
 });
 
-Route::group(['prefix' => 'auth'], function () {
+Route::group(['middleware' => 'cors', 'prefix' => 'auth'], function () {
     Route::post('/token', 'Auth\DefaultController@authenticate');
     Route::post('/refresh', 'Auth\DefaultController@refreshToken');
     Route::post('/register', 'Auth\DefaultController@register');

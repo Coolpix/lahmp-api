@@ -79,6 +79,7 @@ class MatchController extends Controller
     public function saveMatch(Request $request){
         $match = new Match;
         $match->save();
+        $match->finish = $request->finish;
         $match->round()->associate($request->round)->save();
         $match->teams()->attach([$request->teams[0],$request->teams[1]]);
         $match->season()->associate($request->season)->save();
@@ -89,7 +90,7 @@ class MatchController extends Controller
         $match = Match::find($matchID);
         if ($match){
             $match->update([
-
+                'finish'=>$request->finish,
             ]);
             $match->round()->associate($request->round)->save();
             $match->season()->associate($request->season)->save();

@@ -10,6 +10,7 @@ class MatchTransformer {
             'teams' => $match->teams,
             'round' => $match->round,
             'goals' => $match->goals,
+            'finish' => $match->finish,
             'assists' => $match->assists,
             'season' => $match->season
         ];
