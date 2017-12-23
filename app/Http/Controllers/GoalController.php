@@ -83,6 +83,7 @@ class GoalController extends Controller
         $goal -> match()->associate($request->match)->save();
         $goal -> player()->associate($request->player)->save();
         $goal -> team()->associate($request->team)->save();
+        $goal -> team_against()->associate($request->team_against)->save();
         $goal -> season()->associate($request->season)->save();
         if ($request->assist){
             $goal->assist()->save($assist);

@@ -22,7 +22,7 @@ class PlayerController extends Controller
     }
 
     public function index(){
-        $players = Player::jsonPaginate();
+        $players = Player::jsonPaginate(60);
         return $this->response->withPaginator($players, new PlayerTransformer());
     }
 

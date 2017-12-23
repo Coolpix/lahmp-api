@@ -35,6 +35,14 @@ class Goal extends Model
     }
 
     /**
+     * The team against that belong to the goal.
+     */
+    public function team_against()
+    {
+        return $this->belongsTo('App\Team');
+    }
+
+    /**
      * The assist that belong to the goal.
      */
     public function assist()

@@ -52,6 +52,11 @@ class TeamController extends Controller
         return $this->response->withItem($goals, new TeamGoalTransformer());
     }
 
+    public function getGoalsAgainst($id){
+        $goalsAgainst = Team::find($id)->goalsAgainst;
+        return $this->response->withItem($goalsAgainst, new TeamGoalTransformer());
+    }
+
     public function getMatches($id){
         $team = Team::find($id)->matches;
         return $this->response->withItem($team, new TeamMatchesTransformer());
@@ -90,6 +95,14 @@ class TeamController extends Controller
             try {
                 $goalToSave = Goal::findOrFail($goal);
                 $team->goals()->save($goalToSave);
+            }catch (ModelNotFoundException $ex){
+                return $this->response->errorNotFound('Goal '. $goal .' Not Found');
+            }
+        }
+        foreach ($request->goals_against as $goalAgainst){
+            try {
+                $goalAgainstToSave = Goal::findOrFail($goalAgainst);
+                $team->goals_against()->save($goalAgainstToSave);
             }catch (ModelNotFoundException $ex){
                 return $this->response->errorNotFound('Goal '. $goal .' Not Found');
             }

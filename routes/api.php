@@ -99,6 +99,10 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'assists'], function () {
     Route::delete('/{id}', 'AssistController@deleteAssist');
 });
 
+Route::group(['middleware' => 'auth:api', 'prefix' => 'stats'], function () {
+    Route::get('/season/{season}/scorer', 'StatisticsController@getPlayersMostScorer');
+});
+
 Route::group(['middleware' => 'cors', 'prefix' => 'auth'], function () {
     Route::post('/token', 'Auth\DefaultController@authenticate');
     Route::post('/refresh', 'Auth\DefaultController@refreshToken');

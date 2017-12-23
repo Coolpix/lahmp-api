@@ -15,6 +15,7 @@ class TeamTransformer {
             'players' => $team->players,
             'matches' => $team->matches,
             'goals' => $team->goals,
+            'goals_against' => $team->goals_against,
             'assists' => $team->assists
         ];
     }

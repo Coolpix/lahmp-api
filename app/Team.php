@@ -39,7 +39,15 @@ class Team extends Model
      */
     public function goals()
     {
-        return $this->hasMany('App\Goal');
+        return $this->hasMany('App\Goal','team_id');
+    }
+
+    /**
+     * The goals against that belong to the team.
+     */
+    public function goals_against()
+    {
+        return $this->hasMany('App\Goal','team_against_id');
     }
 
     /**
