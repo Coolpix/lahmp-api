@@ -51,6 +51,7 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'teams'], function () {
     Route::get('/{id}/matches', 'TeamController@getMatches');
     Route::get('/{id}/assists', 'TeamController@getAssists');
     Route::post('/', 'TeamController@saveTeam');
+    Route::put('/{id}', 'TeamController@updateTeam');
     Route::delete('/{id}', 'TeamController@deleteTeam');
 });
 

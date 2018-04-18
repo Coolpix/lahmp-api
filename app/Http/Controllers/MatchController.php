@@ -120,7 +120,7 @@ class MatchController extends Controller
             };
             return $this->response->withItem($match, new MatchTransformer());
         }else{
-            return $this->response->errorNotFound('Round Not Found');
+            return $this->response->errorNotFound('Match Not Found');
         }
     }
 

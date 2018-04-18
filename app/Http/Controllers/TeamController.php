@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Assist;
+use App\Goal;
+use App\Player;
 use App\Transformer\Teams\TeamAssistsTransformer;
 use App\Transformer\Teams\TeamGoalTransformer;
 use App\Transformer\Teams\TeamMatchesTransformer;
 use App\Transformer\Teams\TeamPlayerTransformer;
 use App\Transformer\Teams\TeamTransformer;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use EllipseSynergie\ApiResponse\Contracts\Response;
@@ -72,6 +76,7 @@ class TeamController extends Controller
         $team->name = $request->name;
         $team->logo = $request->logo;
         $team->mini_logo = $request->mini_logo;
+        $team->points = $request->points;
         $team->season()->associate($request->season)->save();
         $team->save();
         $team->matches()->attach($request->matches);
@@ -108,6 +113,54 @@ class TeamController extends Controller
             }
         }
         return $this->response->withItem($team, new TeamTransformer());
+    }
+
+    public function updateTeam($teamID, Request $request){
+        $team = Team::find($teamID);
+        if ($team){
+            $team->update([
+                'name'=>$request->name,
+                'logo'=>$request->logo,
+                'mini_logo'=>$request->mini_logo,
+                'points'=>$request->points
+            ]);
+            $team->season()->associate($request->season)->save();
+            foreach ($request->players as $player){
+                try {
+                    $playerToSave = Player::findOrFail($player);
+                    $team->assists()->save($playerToSave);
+                }catch (ModelNotFoundException $ex){
+                    return $this->response->errorNotFound('Player '. $player .' Not Found');
+                }
+            }
+            foreach ($request->assists as $assist){
+                try {
+                    $assistToSave = Assist::findOrFail($assist);
+                    $team->assists()->save($assistToSave);
+                }catch (ModelNotFoundException $ex){
+                    return $this->response->errorNotFound('Assist '. $assist .' Not Found');
+                }
+            };
+            foreach ($request->goals as $goal){
+                try {
+                    $goalToSave = Goal::findOrFail($goal);
+                    $team->goals()->save($goalToSave);
+                }catch (ModelNotFoundException $ex){
+                    return $this->response->errorNotFound('Goal '. $goal .' Not Found');
+                }
+            };
+            foreach ($request->goals_against as $goalAgainst){
+                try {
+                    $goalAgainstToSave = Goal::findOrFail($goalAgainst);
+                    $team->goals_against()->save($goalAgainstToSave);
+                }catch (ModelNotFoundException $ex){
+                    return $this->response->errorNotFound('Goal '. $goal .' Not Found');
+                }
+            }
+            return $this->response->withItem($team, new TeamTransformer());
+        }else{
+            return $this->response->errorNotFound('Team Not Found');
+        }
     }
 
     public function deleteTeam($teamID){
