@@ -8,6 +8,7 @@ class RoundTransformer {
         return [
             'id' => $round->id,
             'name' => $round->name,
+            'date' => $round->date,
             'matches' => $round->matches,
             'season' => $round->season
         ];

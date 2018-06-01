@@ -43,6 +43,7 @@ class RoundController extends Controller
     public function saveRound(Request $request){
         $round = new Round;
         $round->name = $request->name;
+        $round->date = $request->date;
         $round->save();
         $round->season()->associate($request->season)->save();
         foreach ($request->matches as $match){
@@ -60,7 +61,8 @@ class RoundController extends Controller
         $round = Round::find($roundID);
         if ($round){
             $round->update([
-                'name'=>$request->name
+                'name'=>$request->name,
+                'date'=>$request->date
             ]);
             $round->season()->associate($request->season)->save();
             foreach ($request->matches as $match){
